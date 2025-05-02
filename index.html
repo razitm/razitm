@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Razi TM Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes rotateIn {
+            from { transform: rotate(-10deg) scale(0.8); opacity: 0; }
+            to { transform: rotate(0) scale(1); opacity: 1; }
+        }
+        @keyframes slideInLeft {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes rgbGlow {
+            0% { box-shadow: 0 4px 15px rgba(255, 0, 0, 0.5); }
+            33% { box-shadow: 0 4px 15px rgba(0, 255, 0, 0.5); }
+            66% { box-shadow: 0 4px 15px rgba(0, 0, 255, 0.5); }
+            100% { box-shadow: 0 4px 15px rgba(255, 0, 0, 0.5); }
+        }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 5px rgba(79, 70, 229, 0.5); }
+            50% { text-shadow: 0 0 15px rgba(79, 70, 229, 0.8), 0 0 25px rgba(124, 58, 237, 0.6); }
+        }
+        @keyframes scaleUp {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 5px rgba(79, 70, 229, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(79, 70, 229, 0.8), 0 0 30px rgba(124, 58, 237, 0.6); }
+        }
+        @keyframes hoverLift {
+            from { transform: translateY(0); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); }
+            to { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); }
+        }
+        .fade-in { animation: fadeIn 1.2s ease-out; }
+        .bounce { animation: bounce 1.5s infinite; }
+        .rotate-in { animation: rotateIn 0.8s ease-out; }
+        .slide-in-left { animation: slideInLeft 1s ease-out; }
+        .slide-in-right { animation: slideInRight 1s ease-out; }
+        .scale-up { animation: scaleUp 0.6s ease-out; }
+        .pulse-glow { animation: pulseGlow 2s ease-in-out infinite; }
+        .typing {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 3s steps(40, end) 1s 1 normal both,
+                       glow 2s ease-in-out infinite;
+        }
+        .section {
+            min-height: 100vh;
+            padding: 5rem 1rem;
+            scroll-snap-align: start;
+        }
+        .btn {
+            transition: all 0.3s ease;
+            background: linear-gradient(45deg, #5b21b6, #06b6d4, #8b5cf6);
+            background-size: 200%;
+            animation: rgbGlow 3s infinite;
+        }
+        .btn:hover {
+            animation: hoverLift 0.3s ease-out forwards;
+            background-position: right;
+        }
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+        #home {
+            background: url('./razi.jpg') center/cover no-repeat fixed;
+            position: relative;
+        }
+        #home::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4));
+            z-index: 1;
+        }
+        #home > * {
+            position: relative;
+            z-index: 2;
+        }
+        #about, #skills, #projects, #hobbies, #contact {
+            background: url('https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat fixed;
+            position: relative;
+        }
+        #about::before, #skills::before, #projects::before, #hobbies::before, #contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
+            z-index: 1;
+        }
+        #about > *, #skills > *, #projects > *, #hobbies > *, #contact > * {
+            position: relative;
+            z-index: 2;
+        }
+        .card {
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .card:hover {
+            animation: hoverLift 0.3s ease-out forwards;
+        }
+        .hexagon {
+            position: relative;
+            width: 200px;
+            height: 230.94px;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .hexagon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            filter: contrast(1.2) brightness(1.1) saturate(1.3);
+        }
+        .hexagon:hover img {
+            transform: scale(1.1);
+        }
+        .hexagon::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(79, 70, 229, 0.2), rgba(124, 58, 237, 0.2));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .hexagon:hover::after {
+            opacity: 1;
+        }
+        .pulse-glow-img {
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+        @media (max-width: 640px) {
+            nav .space-x-4 {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                justify-content: center;
+            }
+            nav .space-x-4 a {
+                font-size: 0.9rem;
+                padding: 0.5rem 1rem;
+            }
+            .hexagon {
+                width: 160px;
+                height: 184.75px;
+            }
+        }
+        h2, h3 {
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+            font-family: 'Inter', sans-serif;
+        }
+        p {
+            line-height: 1.8;
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white font-sans">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-gradient-to-r from-gray-900 to-gray-800 bg-opacity-95 z-50 py-4">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <h1 class="text-3xl font-extrabold text-indigo-300 fade-in">Razi TM</h1>
+            <div class="space-x-4">
+                <a href="#home" class="px-4 py-2 rounded-lg btn slide-in-left" aria-label="Home">Home</a>
+                <a href="#about" class="px-4 py-2 rounded-lg btn slide-in-left" aria-label="About">About</a>
+                <a href="#skills" class="px-4 py-2 rounded-lg btn slide-in-left" aria-label="Skills">Skills</a>
+                <a href="#projects" class="px-4 py-2 rounded-lg btn slide-in-right" aria-label="Projects">Projects</a>
+                <a href="#hobbies" class="px-4 py-2 rounded-lg btn slide-in-right" aria-label="Hobbies">Hobbies</a>
+                <a href="#contact" class="px-4 py-2 rounded-lg btn slide-in-right" aria-label="Contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="section flex items-center justify-center">
+        <div class="text-center max-w-3xl mx-auto fade-in">
+            <h2 class="text-5xl md:text-6xl font-extrabold mb-4 text-indigo-100">Welcome to Razi TM's Portfolio</h2>
+            <p class="text-xl md:text-2xl mb-6 text-gray-200 typing">Tech Enthusiast | Web Developer | Programmer</p>
+            <a href="https://grok.com/" class="px-6 py-3 text-white rounded-lg btn bounce" aria-label="Learn More">Learn More</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-6 text-green-100 fade-in">About Me</h2>
+            <div class="flex justify-center mb-6">
+                <div class="hexagon pulse-glow">
+                    <img src="ruzz.jpg" alt="Razi TM Profile" class="pulse-glow-img">
+                </div>
+            </div>
+            <p class="text-lg mb-6 max-w-2xl mx-auto text-gray-100 scale-up">
+                Hi, I'm Razi TM, a passionate Web Developer and Programmer with a love for creating innovative solutions. 
+                As a Tech Enthusiast, I enjoy exploring new technologies and building projects that make a difference.my 
+                                      house in karunagappaly.clappana
+            </p>
+            <a href="#skills" class="px-6 py-3 text-white rounded-lg btn slide-in-right" aria-label="View Skills">My Skills</a>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section">
+        <div class="container mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-6 text-yellow-100 fade-in">My Skills</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <div class="p-6 rounded-lg card scale-up">
+                    <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=100&auto=format&fit=crop" alt="Web Development" class="w-16 h-16 mx-auto mb-2 rounded-full pulse-glow-img">
+                    <h3 class="text-2xl font-semibold mb-2 text-yellow-200">Web Development</h3>
+                    <p class="text-gray-200">HTML, CSS, JavaScript, React, Tailwind CSS</p>
+                </div>
+                <div class="p-6 rounded-lg card scale-up">
+                    <img src="tpro.jpg" alt="Programming" class="w-16 h-16 mx-auto mb-2 rounded-full pulse-glow-img">
+                    <h3 class="text-2xl font-semibold mb-2 text-yellow-200">Programming</h3>
+                    <p class="text-gray-200">Python, JavaScript, C++, SQL</p>
+                </div>
+                <div class="p-6 rounded-lg card scale-up">
+                    <img src="https://images.unsplash.com/photo-1504639725590-34d0984388bd?q=80&w=100&auto=format&fit=crop" alt="Tools" class="w-16 h-16 mx-auto mb-2 rounded-full pulse-glow-img">
+                    <h3 class="text-2xl font-semibold mb-2 text-yellow-200">Tools</h3>
+                    <p class="text-gray-200">Git, VS Code, Figma, Docker</p>
+                </div>
+            </div>
+            <a href="#projects" class="mt-6 px-6 py-3 text-white rounded-lg btn slide-in-right" aria-label="View Projects">See My Projects</a>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+        <div class="container mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-6 text-red-100 fade-in">My Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <div class="p-6 rounded-lg card scale-up">
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=150&auto=format&fit=crop" alt="Portfolio Website" class="w-24 h-24 mx-auto mb-2 rounded-lg pulse-glow-img">
+                    <h3 class="text-2xl font-semibold mb-2 text-red-200">Portfolio Website</h3>
+                    <p class="text-gray-200">A vibrant personal portfolio built with HTML, CSS, and JavaScript.</p>
+                </div>
+                <div class="p-6 rounded-lg card scale-up">
+                    <img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=150&auto=format&fit=crop" alt="Photo Gallery App" class="w-24 h-24 mx-auto mb-2 rounded-lg pulse-glow-img">
+                    <h3 class="text-2xl font-semibold mb-2 text-red-200">Photo Gallery App</h3>
+                    <p class="text-gray-200">A web app to showcase photography, built with React and Tailwind CSS.</p>
+                </div>
+            </div>
+            <a href="#hobbies" class="mt-6 px-6 py-3 text-white rounded-lg btn slide-in-right" aria-label="View Hobbies">Explore My Hobbies</a>
+        </div>
+    </section>
+
+    <!-- Hobbies Section -->
+    <section id="hobbies" class="section">
+        <div class="container mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-6 text-blue-100 fade-in">My Hobbies</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <div class="p-6 rounded-lg card scale-up">
+                    <img src="cycle.jpg" alt="Cycling" class="w-24 h-24 mx-auto mb-2 rounded-lg pulse-glow-img">
+                    <h3 class="text-2xl font-semibold mb-2 text-blue-200">Cycling</h3>
+                    <p class="text-gray-200">I love hitting the trails and exploring new routes on my bike.</p>
+                </div>
+                <a href="photography.html" class="p-6 rounded-lg card scale-up">
+                    <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=150&auto=format&fit=crop" alt="Photography" class="w-24 h-24 mx-auto mb-2 rounded-lg pulse-glow-img">
+                    <h3 class="text-2xl font-semibold mb-2 text-blue-200">Photography</h3>
+                    <p class="text-gray-200">Capturing the beauty of the world through my lens is my passion.</p>
+                </a>
+            </div>
+            <a href="#contact" class="mt-6 px-6 py-3 text-white rounded-lg btn slide-in-right" aria-label="Contact Me">Get in Touch</a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-6 text-purple-100 fade-in">Contact Me</h2>
+            <p class="text-lg mb-6 max-w-2xl mx-auto text-gray-200 scale-up">
+                Want to collaborate or just say hi? Reach out to me!
+            </p>
+            <div class="space-x-4">
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=razicruuz@gmail.com" target="_blank" class="px-6 py-3 text-white rounded-lg btn slide-in-left" aria-label="Email Razi via Gmail">Email Me</a>
+                <a href="https://github.com" target="_blank" class="px-6 py-3 text-white rounded-lg btn slide-in-left" aria-label="Visit GitHub">GitHub</a>
+                <a href="https://linkedin.com/in/razitm" target="_blank" class="px-6 py-3 text-white rounded-lg btn slide-in-right" aria-label="Visit LinkedIn">LinkedIn</a>
+                <a href="https://instagram.com/mhmd_razi_m_" target="_blank" class="px-6 py-3 text-white rounded-lg btn slide-in-right" aria-label="Visit Instagram">Instagram</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Intersection Observer for animating elements when they come into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                    if (entry.target.classList.contains('btn')) {
+                        if (!entry.target.classList.contains('slide-in-right')) {
+                            entry.target.classList.add('slide-in-left');
+                        }
+                    }
+                    if (entry.target.classList.contains('card') || entry.target.classList.contains('hexagon')) {
+                        entry.target.classList.add('scale-up');
+                    }
+                    if (entry.target.tagName === 'P' && !entry.target.classList.contains('typing')) {
+                        entry.target.classList.add('scale-up');
+                    }
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.card, .hexagon, .section h2, .section a.btn, .section p').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+
+
+<script src='https://cdn.jotfor.ms/s/umd/latest/for-embedded-agent.js'></script>
+<script>
+  window.addEventListener("DOMContentLoaded", function() {
+    window.AgentInitializer.init({
+      agentRenderURL: "https://agent.jotform.com/01967c2c6c6e7199aeafe11e8a10efde343f",
+      rootId: "JotformAgent-01967c2c6c6e7199aeafe11e8a10efde343f",
+      formID: "01967c2c6c6e7199aeafe11e8a10efde343f",
+      queryParams: ["skipWelcome=1", "maximizable=1"],
+      domain: "https://www.jotform.com",
+      isDraggable: false,
+      background: "linear-gradient(180deg, #6C73A8 0%, #6C73A8 100%)",
+      buttonBackgroundColor: "#0066C3",
+      buttonIconColor: "#FFFFFF",
+      variant: false,
+      customizations: {
+        "greeting": "Yes",
+        "greetingMessage": "Hi! How can I assist you?",
+        "openByDefault": "No",
+        "pulse": "Yes",
+        "position": "right",
+        "autoOpenChatIn": "0"
+      },
+      isVoice: false,
+    });
+  });
+</script>
+
+</body>
+</html>
